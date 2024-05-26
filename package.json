@@ -2,10 +2,10 @@
   "name": "zh-base",
   "type": "commonjs",
   "version": "2.0.0",
-  "description": "zhbase - 最好的 uniapp 开发模板",
+  "description": "uniapp template",
   "author": {
-    "name": "zhonghe",
-    "zhName": "zhonghe",
+    "name": "codercup",
+    "zhName": "菲鸽",
     "email": "1020103647@qq.com",
     "github": "https://github.com/codercup",
     "gitee": "https://gitee.com/codercup"
@@ -61,8 +61,8 @@
     "build:quickapp-webview": "uni build -p quickapp-webview",
     "build:quickapp-webview-huawei": "uni build -p quickapp-webview-huawei",
     "build:quickapp-webview-union": "uni build -p quickapp-webview-union",
-    "prepare": "node ./shell/postinstall.js & git init && husky install ",
-    "type-check": "vue-tsc --noEmit"
+    "type-check": "vue-tsc --noEmit",
+    "prepare": "node ./shell/postinstall.js"
   },
   "lint-staged": {
     "**/*.{html,vue,ts,cjs,json,md}": [
@@ -99,7 +99,7 @@
     "pinia-plugin-persistedstate": "3.2.1",
     "qs": "^6.11.2",
     "vue": "3.3.11",
-    "wot-design-uni": "^1.2.13"
+    "wot-design-uni": "^1.2.19"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",

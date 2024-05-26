@@ -1,0 +1,163 @@
+.test {
+  // 可以通过 @apply 多个样式封装整体样式
+  @apply mt-4 ml-4;
+
+  padding-top: 4px;
+  color: red;
+}
+
+// 隐藏滚动条
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+// card中input样式
+.card-input {
+  .wd-input__value {
+    padding: 14rpx 26rpx;
+    background: #f4f4f4 !important;
+    border-radius: 6rpx;
+  }
+}
+
+// 单选块公共样式
+.items-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-start;
+
+  .item {
+    box-sizing: border-box;
+    display: flex;
+    flex: 0 1 calc(33.333% - 10px);
+    align-items: center;
+    justify-content: center;
+    padding: 10rpx;
+    margin-bottom: 10px;
+    color: #333;
+    background: #f6f6f6;
+    border: 2rpx solid transparent;
+    border-radius: 10rpx;
+
+    &.active {
+      color: #ff5b00;
+      background: #fff3e8;
+      border-color: #ff5b00;
+    }
+  }
+}
+
+// 自定卡片必填样式
+.custom-card-required {
+  .wd-card__title {
+    position: relative;
+    padding-left: 12px;
+
+    &::after {
+      position: absolute;
+      top: 2px;
+      left: 0;
+      font-size: var(--wot-cell-required-size, 18px);
+      line-height: 1.1;
+      color: var(--wot-cell-required-color, var(--wot-color-danger, #fa4350));
+      content: "*";
+    }
+  }
+}
+
+// 自定义textarea样式
+.custom-textarea {
+  border: 2rpx solid #ddd;
+  border-radius: 10rpx;
+}
+
+// 自定义单元格样式
+.custom-cell {
+  .wd-cell__title {
+    font-size: 16px !important;
+  }
+
+  .wd-cell__right {
+    flex: 3 !important;
+  }
+}
+
+// 自定义页面底部固定按钮样式
+.page-footer {
+  position: fixed;
+  bottom: 0rpx;
+  z-index: 9;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 20rpx;
+  background: #fff;
+}
+
+// 去除input清除样式
+.wd-input__clear {
+  background: transparent !important;
+}
+
+.wd-input__count {
+  background: transparent !important;
+}
+
+// 公共状态样式
+// 定义状态颜色映射
+$status-colors: (
+  1: #f39006,
+  // 黄色
+  2: #00ced1,
+  // 深青色
+  3: #4682b4,
+  // 钢蓝色
+  4: #32cd32,
+  // 酸橙绿
+  5: #008000,
+  // 绿色
+  6: #f00 // 红色,,,,,,,,,,,,,
+);
+
+// 遍历状态颜色映射并生成样式规则
+@each $status, $color in $status-colors {
+  .status-#{$status} {
+    color: $color;
+  }
+}
+
+// 暂无更多样式
+.noMore {
+  display: flex;
+  justify-content: center;
+  color: #b5b4b4;
+}
+
+// 公共按钮样式
+.custom-btn {
+  min-width: 100px !important;
+  // height: 32px !important;
+  // padding: 8px 20px;
+  border-radius: 8rpx !important;
+}
+
+.header-card {
+  margin-bottom: 10rpx !important;
+
+  .wd-card__footer {
+    min-height: 20rpx;
+    padding: 0 !important;
+  }
+}
+
+//字体颜色
+.cell-color-info {
+  // color: #94a3b8;
+  color: #222121;
+}
+.cell-color-primary {
+  color: #4d80f0;
+}
