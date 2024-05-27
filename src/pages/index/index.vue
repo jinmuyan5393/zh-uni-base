@@ -2,16 +2,13 @@
 <route lang="json5" type="home">
 {
   style: {
-    navigationStyle: 'custom',
-    navigationBarTitleText: '首页',
+    navigationStyle: "custom",
+    navigationBarTitleText: "首页",
   },
 }
 </route>
 <template>
-  <view
-    class="bg-white overflow-hidden pt-2 px-4"
-    :style="{ marginTop: safeAreaInsets?.top + 'px' }"
-  >
+  <view class="bg-white overflow-hidden pt-2 px-4" :style="{ marginTop: safeAreaInsets?.top + 'px' }">
     <view class="mt-12">
       <image src="/static/logo.svg" alt="" class="w-28 h-28 block mx-auto" />
     </view>
@@ -27,26 +24,25 @@
       模板分支是：
       <text class="text-green-500">base</text>
     </view>
+    <view>code: 2</view>
+    <view>转换后的label值：{{ transCodeToName(PAY_STATUS, 2) }}</view>
   </view>
 </template>
 
 <script lang="ts" setup>
-import PLATFORM from '@/utils/platform'
+import PLATFORM from "@/utils/platform";
+import { transCodeToName } from "zh-jsutil";
+import { PAY_STATUS } from "@/utils/dict";
 
 defineOptions({
-  name: 'Home',
-})
+  name: "Home",
+});
 
 // 获取屏幕边界到安全区域距离
-const { safeAreaInsets } = uni.getSystemInfoSync()
-const author = ref('菲鸽')
+const { safeAreaInsets } = uni.getSystemInfoSync();
 const description = ref(
-  'unibest 是一个集成了多种工具和技术的 uniapp 开发模板，由 uniapp + Vue3 + Ts + Vite4 + UnoCss + UniUI + VSCode 构建，模板具有代码提示、自动格式化、统一配置、代码片段等功能，并内置了许多常用的基本组件和基本功能，让你编写 uniapp 拥有 best 体验。',
-)
-
-onLoad(() => {
-  console.log(author)
-})
+  "unibest 是一个集成了多种工具和技术的 uniapp 开发模板，由 uniapp + Vue3 + Ts + Vite4 + UnoCss + UniUI + VSCode 构建，模板具有代码提示、自动格式化、统一配置、代码片段等功能，并内置了许多常用的基本组件和基本功能，让你编写 uniapp 拥有 best 体验。",
+);
 </script>
 
 <style>
