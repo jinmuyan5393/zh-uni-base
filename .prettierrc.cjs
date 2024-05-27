@@ -1,6 +1,6 @@
 /*
  * @Date: 2024-04-19 16:24:20
- * @LastEditTime: 2024-04-22 10:30:38
+ * @LastEditTime: 2024-04-19 16:28:40
  * @Description:
  */
 // @see https://prettier.io/docs/en/options
@@ -15,7 +15,6 @@ module.exports = {
   trailingComma: "all", //在对象或数组最后一个元素后面是否加逗号（在ES5中加尾逗号）
   endOfLine: "auto", //行结尾形式 mac和linux是\n  windows是\r\n
   htmlWhitespaceSensitivity: "ignore", //html存在空格是不敏感的
-  printWidth: 150, //换行长度，默认80
   overrides: [
     {
       files: "*.json",
@@ -24,4 +23,5 @@ module.exports = {
       },
     },
   ],
+  printWidth: 150, //换行长度，默认80
 };

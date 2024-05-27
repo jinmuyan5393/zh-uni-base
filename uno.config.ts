@@ -1,7 +1,8 @@
 // uno.config.ts
 import {
-  Preset,
+  type Preset,
   defineConfig,
+  presetUno,
   presetAttributify,
   presetIcons,
   transformerDirectives,
@@ -11,28 +12,25 @@ import {
 import { presetApplet, presetRemRpx, transformerAttributify } from 'unocss-applet'
 
 // @see https://unocss.dev/presets/legacy-compat
-import presetLegacyCompat from '@unocss/preset-legacy-compat'
+// import { presetLegacyCompat } from '@unocss/preset-legacy-compat'
 
-const isH5 = process.env?.UNI_PLATFORM === 'h5'
 const isMp = process.env?.UNI_PLATFORM?.startsWith('mp') ?? false
 
 const presets: Preset[] = []
-if (!isMp) {
-  /**
-   * you can add `presetAttributify()` here to enable unocss attributify mode prompt
-   * although preset is not working for applet, but will generate useless css
-   * 为了不生产无用的css,要过滤掉 applet
-   */
-  // 支持css class属性化，eg: `<button bg="blue-400 hover:blue-500 dark:blue-500 dark:hover:blue-600" text="sm white">attributify Button</button>`
-  presets.push(presetAttributify())
-}
-if (!isH5) {
-  presets.push(presetRemRpx())
+if (isMp) {
+  // 使用小程序预设
+  presets.push(presetApplet(), presetRemRpx())
+} else {
+  presets.push(
+    // 非小程序用官方预设
+    presetUno(),
+    // 支持css class属性化
+    presetAttributify(),
+  )
 }
 export default defineConfig({
   presets: [
     ...presets,
-    presetApplet(),
     // 支持图标，需要搭配图标库，eg: @iconify-json/carbon, 使用 `<button class="i-carbon-sun dark:i-carbon-moon" />`
     presetIcons({
       scale: 1.2,
@@ -45,9 +43,10 @@ export default defineConfig({
     // 将颜色函数 (rgb()和hsl()) 从空格分隔转换为逗号分隔，更好的兼容性app端，example：
     // `rgb(255 0 0)` -> `rgb(255, 0, 0)`
     // `rgba(255 0 0 / 0.5)` -> `rgba(255, 0, 0, 0.5)`
-    presetLegacyCompat({
-      commaStyleColorFunction: true,
-    }) as Preset,
+    // 与群友的正常写法冲突，先去掉！（2024-05-25）
+    // presetLegacyCompat({
+    //   commaStyleColorFunction: true,
+    // }) as Preset,
   ],
   /**
    * 自定义快捷语句
@@ -82,6 +81,13 @@ export default defineConfig({
 
 /**
  * 最终这一套组合下来会得到：
- * mp 里面：mt-4 => margin-top: 32rpx
- * h5 里面：mt-4 => margin-top: 1rem
+ * mp 里面：mt-4 => margin-top: 32rpx  == 16px
+ * h5 里面：mt-4 => margin-top: 1rem == 16px
+ *
+ * 另外，我们还可以推算出 UnoCSS 单位与设计稿差别4倍。
+ * 375 * 4 = 1500，把设计稿设置为1500，那么设计稿里多少px，unocss就写多少述职。
+ * 举个例子，设计稿显示某元素宽度100px，就写w-100即可。
+ *
+ * 如果是传统方式写样式，则推荐设计稿设置为 750，这样设计稿1px，代码写1rpx。
+ * rpx是响应式的，可以让不同设备的屏幕显示效果保持一致。
  */

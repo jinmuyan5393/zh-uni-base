@@ -1,17 +1,16 @@
-<!--
- * @Date: 2024-04-19 16:24:20
- * @LastEditTime: 2024-04-19 16:43:27
- * @Description:
--->
 <template>
-  <view class="default-layout">
+  <config-provider :themeVars="themeVars">
     <slot />
-  </view>
+  </config-provider>
 </template>
-<style lang="scss">
-.default-layout {
-  height: 100vh;
-  overflow: auto;
-  background: #f2f2f2;
+
+<script lang="ts" setup>
+import ConfigProvider from '@/components/ConfigProvider/ConfigProvider.vue'
+import { ConfigProviderThemeVars } from '@/components/ConfigProvider/types'
+
+const themeVars: ConfigProviderThemeVars = {
+  // colorTheme: 'red',
+  // buttonPrimaryBgColor: '#07c160',
+  // buttonPrimaryColor: '#07c160',
 }
-</style>
+</script>

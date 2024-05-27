@@ -1,9 +1,11 @@
+import { UnwrapRef } from 'vue'
+
 type IUseRequestOptions<T> = {
   /** 是否立即执行，如果是则在onLoad执行 */
-  immediate?: boolean;
+  immediate?: boolean
   /** 初始化数据 */
-  initialData?: T;
-};
+  initialData?: T
+}
 
 /**
  * useRequest是一个定制化的请求钩子，用于处理异步请求和响应。
@@ -13,27 +15,30 @@ type IUseRequestOptions<T> = {
  * @param options.initialData 初始化数据，默认为undefined。
  * @returns 返回一个对象{loading, error, data, run}，包含请求的加载状态、错误信息、响应数据和手动触发请求的函数。
  */
-export default function useRequest<T>(func: () => Promise<IResData<T>>, options: IUseRequestOptions<T> = { immediate: true }) {
-  const loading = ref(false);
-  const error = ref(false);
-  const data = ref<T>();
+export default function useRequest<T>(
+  func: () => Promise<IResData<T>>,
+  options: IUseRequestOptions<T> = { immediate: true },
+) {
+  const loading = ref(false)
+  const error = ref(false)
+  const data = ref<T>(options.initialData)
   const run = async () => {
-    loading.value = true;
+    loading.value = true
     func()
-      .then(res => {
-        data.value = res.data;
-        error.value = false;
+      .then((res) => {
+        data.value = res.data as UnwrapRef<T>
+        error.value = false
       })
-      .catch(err => {
-        error.value = err;
+      .catch((err) => {
+        error.value = err
       })
       .finally(() => {
-        loading.value = false;
-      });
-  };
+        loading.value = false
+      })
+  }
 
   onLoad(() => {
-    options.immediate && run();
-  });
-  return { loading, error, data, run };
+    options.immediate && run()
+  })
+  return { loading, error, data, run }
 }

@@ -1,8 +1,3 @@
-/*
- * @Date: 2024-04-23 18:05:04
- * @LastEditTime: 2024-04-25 15:18:01
- * @Description:
- */
 import { createSSRApp } from "vue";
 import App from "./App.vue";
 import store from "./store";

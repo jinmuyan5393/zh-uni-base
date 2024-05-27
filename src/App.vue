@@ -1,8 +1,3 @@
-<!--
- * @Date: 2024-04-22 10:29:36
- * @LastEditTime: 2024-04-25 10:00:08
- * @Description:
--->
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from "@dcloudio/uni-app";
 
