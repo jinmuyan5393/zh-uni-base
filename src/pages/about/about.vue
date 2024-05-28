@@ -12,6 +12,19 @@
       鸽友们好，我是
       <text class="text-red-500">菲鸽</text>
     </view>
+    <tn-icon name="logo-tuniao" type="primary" />
+    <tn-icon name="logo-tuniao" type="success" />
+    <tn-icon name="logo-tuniao" type="danger" />
+    <tn-icon name="logo-tuniao" type="warning" :custom-style="{ fontSize: '20px' }" />
+
+    <tn-icon name="logo-tuniao" color="tn-blue" />
+
+    <tn-icon name="https://tnuiimage.tnkjapp.com/logo/tuniao.png" />
+
+    <tn-tag type="primary">标签</tn-tag>
+    <tn-tag type="success">标签</tn-tag>
+    <tn-tag type="warning">标签</tn-tag>
+    <tn-tag type="danger">标签</tn-tag>
     <RequestComp />
     <UploadComp />
   </view>
