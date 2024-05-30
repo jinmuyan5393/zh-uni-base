@@ -86,13 +86,13 @@
     "@dcloudio/uni-mp-xhs": "3.0.0-4010420240430001",
     "@dcloudio/uni-quickapp-webview": "3.0.0-4010420240430001",
     "@zhonghe/ui": "^1.0.2",
+    "@zhonghe/utils": "^0.0.3",
     "dayjs": "1.11.10",
     "pinia": "2.0.36",
     "pinia-plugin-persistedstate": "3.2.1",
     "qs": "6.5.3",
     "vue": "3.4.26",
-    "z-paging": "^2.7.10",
-    "zh-jsutil": "^1.1.4"
+    "z-paging": "^2.7.10"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
