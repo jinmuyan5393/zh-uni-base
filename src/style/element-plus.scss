@@ -1,0 +1,445 @@
+.el-breadcrumb__inner,
+.el-breadcrumb__inner a {
+  font-weight: 400 !important;
+}
+
+.el-upload {
+  input[type="file"] {
+    display: none !important;
+  }
+}
+
+.el-upload__input {
+  display: none;
+}
+
+.upload-container {
+  .el-upload {
+    width: 100%;
+
+    .el-upload-dragger {
+      width: 100%;
+      height: 200px;
+    }
+  }
+}
+
+.el-dropdown-menu {
+  padding: 0 !important;
+}
+
+.el-range-separator {
+  box-sizing: content-box;
+}
+
+.is-dark {
+  z-index: 9999 !important;
+}
+
+/* 重置 el-button 中 icon 的 margin */
+.reset-margin [class*="el-icon"] + span {
+  margin-left: 2px !important;
+}
+
+/* 自定义 popover 的类名 */
+.pure-popper {
+  padding: 0 !important;
+}
+
+/* 自定义 tooltip 的类名 */
+.zh-tooltip {
+  // 右侧操作面板right-panel类名的z-index为40000，tooltip需要大于它才能显示
+  z-index: 41000 !important;
+}
+
+/* nprogress 适配 element-plus 的主题色 */
+#nprogress {
+  & .bar {
+    background-color: var(--el-color-primary) !important;
+  }
+
+  & .peg {
+    box-shadow: 0 0 10px var(--el-color-primary), 0 0 5px var(--el-color-primary) !important;
+  }
+
+  & .spinner-icon {
+    border-top-color: var(--el-color-primary);
+    border-left-color: var(--el-color-primary);
+  }
+}
+
+.pure-dialog {
+  .pure-dialog-svg {
+    color: var(--el-color-info);
+  }
+
+  .el-dialog__headerbtn {
+    top: 20px;
+    right: 14px;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* 全局覆盖element-plus的el-dialog、el-drawer、el-message-box、el-notification组件右上角关闭图标的样式，表现更鲜明 */
+.el-dialog__headerbtn,
+.el-message-box__headerbtn {
+  &:hover {
+    .el-dialog__close {
+      color: var(--el-color-info) !important;
+    }
+  }
+}
+
+.el-icon {
+  &.el-dialog__close,
+  &.el-drawer__close,
+  &.el-message-box__close,
+  &.el-notification__closeBtn {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    outline: none;
+    transition: background-color 0.2s, color 0.2s;
+
+    &:hover {
+      color: rgb(0 0 0 / 88%) !important;
+      text-decoration: none;
+      background-color: rgb(0 0 0 / 6%);
+
+      .pure-dialog-svg {
+        color: rgb(0 0 0 / 88%) !important;
+      }
+    }
+  }
+}
+
+/* 克隆并自定义 ElMessage 样式，不会影响 ElMessage 原本样式，在 src/utils/message.ts 中调用自定义样式 ElMessage 方法即可，暗黑模式在 src/style/dark.scss 文件进行了适配 */
+.zh-message {
+  padding: 10px 13px !important;
+  background: #fff !important;
+  border-width: 0 !important;
+  box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d !important;
+
+  &.el-message.is-closable .el-message__content {
+    padding-right: 17px !important;
+  }
+
+  & .el-message__content {
+    color: #000000d9 !important;
+    pointer-events: all !important;
+    background-image: initial !important;
+  }
+
+  & .el-message__icon {
+    margin-right: 8px !important;
+  }
+
+  & .el-message__closeBtn {
+    right: 9px !important;
+    border-radius: 4px;
+    outline: none;
+    transition: background-color 0.2s, color 0.2s;
+
+    &:hover {
+      background-color: rgb(0 0 0 / 6%);
+    }
+  }
+}
+
+/* 自定义菜单搜索样式 */
+.zh-search-dialog {
+  .el-dialog__header {
+    display: none;
+  }
+
+  .el-dialog__body {
+    padding-top: 12px;
+    padding-bottom: 0;
+  }
+
+  .el-input__inner {
+    font-size: 1.2em;
+  }
+
+  .el-dialog__footer {
+    padding-bottom: 10px;
+    box-shadow: 0 -1px 0 0 #e0e3e8, 0 -3px 6px 0 rgb(69 98 155 / 12%);
+  }
+}
+.zh-dialog {
+  padding: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  &.is-fullscreen {
+    width: 100%;
+    height: 100%;
+    border-radius: 0px;
+    .el-dialog__body {
+      height: 100%;
+      max-height: calc(100% - 95px);
+      padding: 0;
+    }
+  }
+  .el-dialog__header {
+    margin-right: 0;
+    height: 48px;
+    display: flex;
+    padding-left: 16px;
+    background-color: #f8f8f8;
+    padding-bottom: 0px !important;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--el-border-color-extra-light);
+  }
+  .el-dialog__footer {
+    border-top: 1px solid var(--el-border-color-extra-light);
+    padding: 0 10px 10px;
+  }
+
+  .el-dialog__body {
+    height: calc(100% - 48px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px;
+  }
+}
+
+/* 自定义折叠面板样式 */
+.zh-collapse {
+  background-color: red;
+  .el-collapse-item .el-collapse-item__header {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    background-color: #f2f2f2;
+    color: #333333;
+    font-size: 14px;
+    height: 42px;
+    line-height: 42px;
+    border: 1px solid #ece5e5;
+  }
+
+  .el-collapse-item__arrow {
+    margin: 0 8px 0 10px !important;
+  }
+
+  .el-collapse-item__content {
+    padding: 15px 10px !important;
+    .demo-collapse-Con {
+      margin-top: 5px !important;
+    }
+  }
+}
+
+/** 自定义抽屉样式 */
+.zh-drawer {
+  .el-drawer__header {
+    padding: 12px 20px;
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--el-border-color-lighter);
+  }
+}
+
+/*全局滚动条样式*/
+::-webkit-scrollbar {
+  width: 6px; /* 滚动条宽度 */
+}
+
+/* 滚动条轨道 */
+::-webkit-scrollbar-track {
+  background: transparent; /* 轨道颜色 */
+}
+
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+  background-color: rgb(221 222 224);
+  border-radius: 4px;
+}
+
+/* 滚动条滑块：hover状态 */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(199 201 203); /* 滑块hover颜色 */
+}
+/* Form 表单
+------------------------------- */
+.el-form {
+  .el-col {
+    margin-bottom: 20px;
+  }
+  // 用于修改弹窗时表单内容间隔太大问题，如系统设置的新增菜单弹窗里的表单内容
+  .el-form-item:last-of-type {
+    margin-bottom: 0 !important;
+  }
+
+  // 修复行内表单最后一个 el-form-item 位置下移问题
+  &.el-form--inline {
+    .el-form-item--large.el-form-item:last-of-type {
+      margin-bottom: 22px !important;
+    }
+
+    .el-form-item--default.el-form-item:last-of-type,
+    .el-form-item--small.el-form-item:last-of-type {
+      margin-bottom: 18px !important;
+    }
+  }
+
+  .el-form-item .el-form-item__label .el-icon {
+    margin-right: 0px;
+  }
+}
+
+/* Table 表格
+------------------------------- */
+.table-box,
+.table-main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+
+  // table-search 表格搜索样式
+  .table-search {
+    padding: 18px 18px 0;
+    margin-bottom: 10px;
+
+    .el-form {
+      .el-form-item__content > * {
+        width: 100%;
+      }
+
+      // 去除时间选择器上下 padding
+      .el-range-editor.el-input__wrapper {
+        padding: 0 10px;
+      }
+    }
+
+    .operation {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 18px;
+    }
+  }
+
+  // 表格 header 样式
+  .table-header {
+    .header-button-lf {
+      float: left;
+    }
+
+    .header-button-ri {
+      float: right;
+    }
+
+    .el-button {
+      margin-bottom: 15px;
+    }
+  }
+
+  // el-table 表格样式
+  .el-table {
+    flex: 1;
+
+    // 修复 safari 浏览器表格错位 https://github.com/HalseySpicy/Geeker-Admin/issues/83
+    table {
+      width: 100%;
+    }
+
+    .el-table__header th {
+      height: 45px;
+      font-size: 15px;
+      font-weight: bold;
+      color: var(--el-text-color-primary);
+      background: var(--el-fill-color-light);
+    }
+
+    .el-table__row {
+      height: 45px;
+      font-size: 14px;
+
+      .move {
+        cursor: move;
+
+        .el-icon {
+          cursor: move;
+        }
+      }
+    }
+
+    // 设置 el-table 中 header 文字不换行，并省略
+    .el-table__header .el-table__cell > .cell {
+      // white-space: nowrap;
+      white-space: wrap;
+    }
+
+    // 解决表格数据为空时样式不居中问题(仅在element-plus中)
+    .el-table__empty-block {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      .table-empty {
+        line-height: 30px;
+      }
+    }
+
+    // table 中 image 图片样式
+    .table-image {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+  }
+
+  // 表格 pagination 样式
+  .el-pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+}
+
+/* el-table 组件大小 */
+.el-table--small {
+  .el-table__header th {
+    height: 40px !important;
+    font-size: 14px !important;
+  }
+
+  .el-table__row {
+    height: 40px !important;
+    font-size: 13px !important;
+  }
+}
+
+.el-table--large {
+  .el-table__header th {
+    height: 50px !important;
+    font-size: 16px !important;
+  }
+
+  .el-table__row {
+    height: 50px !important;
+    font-size: 15px !important;
+  }
+}
+
+/* 自定义打印样式*/
+.zh-print {
+  table-layout: fixed;
+  width: 100%;
+  border-right: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  td,
+  td {
+    padding: 10px;
+    word-break: break-all;
+  }
+  td {
+    color: #000;
+    border-left: 1px solid #000000;
+    border-top: 1px solid #000000;
+  }
+}

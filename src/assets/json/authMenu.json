@@ -1,0 +1,39 @@
+[
+  {
+    "id": "121856222521775925",
+    "menuType": "1",
+    "title": "系统管理",
+    "icon": "ep:operation",
+    "rank": 1,
+    "isUrl": "False",
+    "path": "/system",
+    "showLink": "True",
+    "name": "system",
+    "children": [
+      {
+        "id": "1-1",
+        "menuType": "2",
+        "title": "菜单管理",
+        "name": "menu",
+        "icon": "ep:menu",
+        "rank": 3,
+        "isUrl": "False",
+        "path": "/system/menu",
+        "component": "system/menu/index",
+        "showLink": "True"
+      },
+      {
+        "id": "1-2",
+        "menuType": "2",
+        "title": "用户管理",
+        "icon": "ep:userFilled",
+        "rank": 1,
+        "name": "userManage",
+        "isUrl": "False",
+        "path": "/system/userManage",
+        "component": "system/userManage/index",
+        "showLink": "True"
+      }
+    ]
+  }
+]

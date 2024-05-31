@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .flex-c {
+    @apply flex justify-center items-center;
+  }
+
+  .flex-ac {
+    @apply flex justify-around items-center;
+  }
+
+  .flex-bc {
+    @apply flex justify-between items-center;
+  }
+
+  .navbar-bg-hover {
+    @apply dark:text-white dark:hover:!bg-[#242424];
+  }
+  .zh-wrapper {
+    @apply bg-white p-[10px] rounded h-full;
+  }
+}
