@@ -1,15 +1,10 @@
-/*
- * @Description:
- * @Author: jinmuyan
- * @LastEditTime: 2024-05-22 09:19:18
- */
 import axios, { AxiosInstance, AxiosError, AxiosRequestConfig, InternalAxiosRequestConfig, AxiosResponse } from "axios";
 import { tryHideFullScreenLoading } from "@/components/Loading/fullScreen";
 import { ElMessage } from "element-plus";
 import { ResultData } from "@/api/interface";
 import { ResultEnum } from "@/enums/httpEnum";
 import { checkStatus } from "./helper/checkStatus";
-import { storageLocal } from "@/lib/baseUtils";
+import { storageLocal } from "@zhonghe/utils";
 import router from "@/router";
 
 export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
@@ -56,7 +51,7 @@ class RequestHttp {
      */
     this.service.interceptors.request.use(
       (config: CustomAxiosRequestConfig) => {
-        const userinfo = storageLocal().getItem("user-info");
+        const userinfo = storageLocal.getItem("user-info");
         const token = userinfo ? userinfo.token : "";
         // 当前请求不需要显示 loading，在 api 服务中通过指定的第三个参数: { loading: false } 来控制
         config.loading ?? (config.loading = true);
@@ -85,7 +80,7 @@ class RequestHttp {
         tryHideFullScreenLoading();
         // 登陆失效
         if (data.code == ResultEnum.OVERDUE || data.code == -1) {
-          storageLocal().clear();
+          storageLocal.clear();
           router.replace("/login");
           ElMessage.error(data.msg);
           return Promise.reject(data);

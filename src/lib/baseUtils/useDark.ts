@@ -29,7 +29,7 @@ const useDark = (): DarkModeDetector => {
 
   // Return the reactive isDark value
   return {
-    isDark
+    isDark,
   };
 };
 

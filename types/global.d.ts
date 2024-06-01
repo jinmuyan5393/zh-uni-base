@@ -1,21 +1,6 @@
 /**
  * 全局类型声明，无需引入直接在 `.vue` 、`.ts` 、`.tsx` 文件使用即可获得类型提示
  */
-
-/**
- * 全局自定义环境变量的类型声明
- */
-interface ViteEnv {
-  VITE_PORT: number;
-  VITE_PUBLIC_PATH: string;
-  VITE_ROUTER_HISTORY: string;
-  VITE_HIDE_HOME: string;
-  VITE_COMPRESSION: ViteCompression;
-  VITE_PROXY: Array<any>;
-}
-
-declare const BMapGL: any
-
 declare global {
   /**
    * 平台的名称、版本、依赖、最后构建时间的类型提示
@@ -29,6 +14,15 @@ declare global {
     };
     lastBuildTime: string;
   };
+
+  interface ViteEnv {
+    VITE_PORT: number;
+    VITE_PUBLIC_PATH: string;
+    VITE_ROUTER_HISTORY: string;
+    VITE_HIDE_HOME: string;
+    VITE_COMPRESSION: ViteCompression;
+    VITE_PROXY: Array<any>;
+  }
 
   /**
    * Window 的类型提示
@@ -141,19 +135,4 @@ declare global {
 
   /* FileType */
 }
-
-declare namespace File {
-  type ImageMimeType =
-    | "image/apng"
-    | "image/bmp"
-    | "image/gif"
-    | "image/jpeg"
-    | "image/pjpeg"
-    | "image/png"
-    | "image/svg+xml"
-    | "image/tiff"
-    | "image/webp"
-    | "image/x-icon";
-
-  type ExcelMimeType = "application/vnd.ms-excel" | "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-}
+export { };

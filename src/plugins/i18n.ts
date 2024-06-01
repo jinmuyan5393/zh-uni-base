@@ -1,6 +1,6 @@
 // 多组件库的国际化和本地项目国际化兼容
 import { App, WritableComputedRef } from "vue";
-import { storageLocal } from "@/lib/baseUtils";
+import { storageLocal } from "@zhonghe/utils";
 import { type I18n, createI18n } from "vue-i18n";
 import { responsiveStorageNameSpace } from "@/config";
 
@@ -10,24 +10,22 @@ import zhLocale from "element-plus/es/locale/lang/zh-cn";
 
 function siphonI18n(prefix = "zh-CN") {
   return Object.fromEntries(
-    Object.entries(
-      import.meta.glob("../../locales/*.y(a)?ml", { eager: true })
-    ).map(([key, value]: any) => {
+    Object.entries(import.meta.glob("../../locales/*.y(a)?ml", { eager: true })).map(([key, value]: any) => {
       const matched = key.match(/([A-Za-z0-9-_]+)\./i)[1];
       return [matched, value.default];
-    })
+    }),
   )[prefix];
 }
 
 export const localesConfigs = {
   zh: {
     ...siphonI18n("zh-CN"),
-    ...zhLocale
+    ...zhLocale,
   },
   en: {
     ...siphonI18n("en"),
-    ...enLocale
-  }
+    ...enLocale,
+  },
 };
 
 /**
@@ -42,8 +40,7 @@ export function transformI18n(message: any = "") {
 
   // 处理存储动态路由的title,格式 {zh:"",en:""}
   if (typeof message === "object") {
-    const locale: string | WritableComputedRef<string> | any =
-      i18n.global.locale;
+    const locale: string | WritableComputedRef<string> | any = i18n.global.locale;
     return message[locale?.value];
   }
 
@@ -63,12 +60,9 @@ export const $t = (key: string) => key;
 
 export const i18n: I18n = createI18n({
   legacy: false,
-  locale:
-    storageLocal().getItem<StorageConfigs>(
-      `${responsiveStorageNameSpace()}locale`
-    )?.locale ?? "zh",
+  locale: storageLocal.getItem(`${responsiveStorageNameSpace()}locale`)?.locale ?? "zh",
   fallbackLocale: "en",
-  messages: localesConfigs
+  messages: localesConfigs,
 });
 
 export function useI18n(app: App) {

@@ -1,8 +1,3 @@
-/*
- * @Date: 2024-04-17 14:45:15
- * @LastEditTime: 2024-04-23 14:15:15
- * @Description:
- */
 import { resolve } from "path";
 import vue from "@vitejs/plugin-vue";
 import { viteBuildInfo } from "./info";

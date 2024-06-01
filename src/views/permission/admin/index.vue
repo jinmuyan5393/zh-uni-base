@@ -1,12 +1,6 @@
 <template>
   <div class="admin-manager h-full">
-    <search-form
-      class="bg-white pt-[10px] pr-[10px] rounded"
-      :columns="searchCols"
-      :search="search"
-      :reset="reset"
-      :searchParam="searchParam"
-    />
+    <search-form class="bg-white pt-[10px] pr-[10px] rounded" :columns="searchCols" :search="search" :reset="reset" :searchParam="searchParam" />
     <div class="table-wrapper bg-white mt-3 p-[10px] rounded">
       <com-table
         :columns="columns"
@@ -15,8 +9,7 @@
         :toolButton="false"
         :pageInfo="pager"
         @currentChange="handleCurrentChange"
-        @sizeChange="handleSizeChange"
-      >
+        @sizeChange="handleSizeChange">
         <template #tableHeader>
           <el-button type="primary" @click="add">新增</el-button>
         </template>
@@ -28,15 +21,7 @@
           <el-tag v-else type="danger">禁用</el-tag>
         </template>
         <template #operate="{ row }">
-          <el-button
-            type="primary"
-            v-if="row.root !== 1"
-            :icon="EditPen"
-            link
-            size="small"
-            @click="handleEdit(row)"
-            >修改</el-button
-          >
+          <el-button type="primary" v-if="row.root !== 1" :icon="EditPen" link size="small" @click="handleEdit(row)">修改</el-button>
         </template>
       </com-table>
     </div>
@@ -46,7 +31,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, reactive } from "vue";
-import { authAdminListApi, authRoleAllApi } from "@/api/modules/role";
+import { authAdminListApi, authRoleAllApi } from "@/api/modules/sys/role";
 import { EditPen } from "@element-plus/icons-vue";
 import { ElAvatar, ElMessage } from "element-plus";
 import addDialog from "./components/addDialog.vue";
@@ -62,8 +47,8 @@ const searchCols = ref<any>([
     el: "select",
     label: "管理员角色",
     key: "role_id",
-    optionList: roleList
-  }
+    optionList: roleList,
+  },
 ]);
 const searchParam = ref({});
 
@@ -72,72 +57,72 @@ const columns = ref<any>([
     label: "ID",
     prop: "id",
     align: "left",
-    minWidth: 60
+    minWidth: 60,
   },
   {
     label: "头像",
     prop: "avatar",
-    minWidth: 100
+    minWidth: 100,
   },
   {
     label: "账号",
     prop: "account",
-    minWidth: 140
+    minWidth: 140,
   },
   {
     label: "名称",
     prop: "name",
-    minWidth: 160
+    minWidth: 160,
   },
   {
     label: "角色",
     prop: "role_name",
-    minWidth: 150
+    minWidth: 150,
   },
   {
     label: "部门",
-    prop: "dept_name"
+    prop: "dept_name",
   },
   {
     label: "状态",
     prop: "disable",
-    minWidth: 150
+    minWidth: 150,
   },
   {
     label: "创建时间",
     prop: "create_time",
-    minWidth: 120
+    minWidth: 120,
   },
   {
     label: "最近登录时间",
     prop: "login_time",
-    minWidth: 120
+    minWidth: 120,
   },
   {
     label: "最近登录IP",
     prop: "login_ip",
-    minWidth: 120
+    minWidth: 120,
   },
   {
     label: "操作",
     prop: "operate",
     isShow: true,
     minWidth: "100px",
-    fixed: "right"
-  }
+    fixed: "right",
+  },
 ]);
 
 const tableData = ref([]);
 const pager = reactive({
   pageNum: 1,
   pageSize: 10,
-  total: 0
+  total: 0,
 });
 function queryList() {
   const params = {
     ...searchParam.value,
     page_no: pager.pageNum,
-    page_size: pager.pageSize
+    page_size: pager.pageSize,
   };
   authAdminListApi(params).then((res: any) => {
     if (res && res.code == 1) {
@@ -158,7 +143,7 @@ function queryAllRole() {
       roleList.value = data.map(item => {
         return {
           label: item.name,
-          value: item.id
+          value: item.id,
         };
       });
     }

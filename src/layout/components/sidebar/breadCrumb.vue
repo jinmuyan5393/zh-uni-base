@@ -4,7 +4,7 @@
  * @LastEditTime: 2024-05-16 16:09:55
 -->
 <script setup lang="ts">
-import { isEqual } from "@/lib/baseUtils";
+import { isEqual } from "@zhonghe/utils";
 import { transformI18n } from "@/plugins/i18n";
 import { ref, watch, onMounted, toRaw } from "vue";
 import { getParentPaths, findRouteByPath } from "@/router/utils";

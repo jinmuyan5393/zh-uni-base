@@ -3,7 +3,7 @@ import { ref, onMounted } from "vue";
 import { ElMessageBox, ElMessage } from "element-plus";
 import { Delete, EditPen, Plus } from "@element-plus/icons-vue";
 import AddDialog from "./components/addDialog.vue";
-import { authMenuListApi, authMenuDeleteApi } from "@/api/modules/role";
+import { authMenuListApi, authMenuDeleteApi } from "@/api/modules/sys/role";
 import { MenuEnum } from "@/enums/appEnum";
 
 onMounted(() => {
@@ -29,49 +29,49 @@ const columns = ref<any>([
     label: "菜单名称",
     prop: "name",
     align: "left",
-    minWidth: 150
+    minWidth: 150,
   },
   {
     label: "类型",
     prop: "type",
-    minWidth: 150
+    minWidth: 150,
   },
   {
     label: "图标",
     prop: "icon",
-    minWidth: 150
+    minWidth: 150,
   },
   {
     label: "权限标识",
     prop: "perms",
-    minWidth: 150
+    minWidth: 150,
   },
   {
     label: "是否显示",
     prop: "is_show",
-    minWidth: 150
+    minWidth: 150,
   },
   {
     label: "菜单状态",
     prop: "is_disable",
-    minWidth: 150
+    minWidth: 150,
   },
   {
     label: "排序",
-    prop: "sort"
+    prop: "sort",
   },
   {
     label: "创建时间",
     prop: "update_time",
-    minWidth: 150
+    minWidth: 150,
   },
   {
     label: "操作",
     prop: "operate",
     isShow: true,
     minWidth: "200px",
-    fixed: "right"
-  }
+    fixed: "right",
+  },
 ]);
 
 // 新增
@@ -83,7 +83,7 @@ function add() {
 // 新增子菜单
 function handleAdd(id?: number) {
   addRef.value.setFormData({
-    pid: id
+    pid: id,
   });
   addRef.value.open();
 }
@@ -98,7 +98,7 @@ function handleDelete(id: any) {
   ElMessageBox.confirm("删除之后无法恢复，是否确认删除？", "提示", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
-    type: "warning"
+    type: "warning",
   }).then(() => {
     authMenuDeleteApi({ id: id }).then((res: any) => {
       if (res && res.code == 1) {
@@ -119,14 +119,7 @@ function refresh() {
 
 <template>
   <div class="meun-manage zh-wrapper">
-    <com-table
-      :columns="columns"
-      :border="true"
-      :tableData="tableData"
-      :isPageable="false"
-      :toolButton="true"
-      @refresh-table="refresh"
-    >
+    <com-table :columns="columns" :border="true" :tableData="tableData" :isPageable="false" :toolButton="true" @refresh-table="refresh">
       <template #tableHeader>
         <el-button type="primary" @click="add">新增</el-button>
       </template>
@@ -144,30 +137,9 @@ function refresh() {
         <el-tag v-else type="danger">停用</el-tag>
       </template>
       <template #operate="{ row }">
-        <el-button
-          type="primary"
-          :icon="Plus"
-          link
-          size="small"
-          @click="handleAdd(row.id)"
-          >新增</el-button
-        >
-        <el-button
-          type="primary"
-          :icon="EditPen"
-          link
-          size="small"
-          @click="handleEdit(row)"
-          >修改</el-button
-        >
-        <el-button
-          type="primary"
-          :icon="Delete"
-          link
-          size="small"
-          @click="handleDelete(row.id)"
-          >删除</el-button
-        >
+        <el-button type="primary" :icon="Plus" link size="small" @click="handleAdd(row.id)">新增</el-button>
+        <el-button type="primary" :icon="EditPen" link size="small" @click="handleEdit(row)">修改</el-button>
+        <el-button type="primary" :icon="Delete" link size="small" @click="handleDelete(row.id)">删除</el-button>
       </template>
     </com-table>
     <add-dialog ref="addRef" @success="queryList" />

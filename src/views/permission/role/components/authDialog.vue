@@ -1,20 +1,8 @@
 <template>
   <div class="addDialog">
     <!-- 添加或修改菜单对话框 -->
-    <el-dialog
-      :title="title"
-      v-model="visible"
-      width="800px"
-      class="zh-dialog"
-      :before-close="handleClose"
-      append-to-body
-    >
-      <el-form
-        ref="formRef"
-        :model="formData"
-        label-width="85px"
-        v-loading="loading"
-      >
+    <el-dialog :title="title" v-model="visible" width="800px" class="zh-dialog" :before-close="handleClose" append-to-body>
+      <el-form ref="formRef" :model="formData" label-width="85px" v-loading="loading">
         <el-scrollbar class="h-[400px] sm:h-[600px]">
           <el-form-item label="权限" prop="menu_id">
             <div>
@@ -27,13 +15,12 @@
                   :data="menuTree"
                   :props="{
                     label: 'name',
-                    children: 'children'
+                    children: 'children',
                   }"
                   :check-strictly="!checkStrictly"
                   node-key="id"
                   :default-expand-all="isExpand"
-                  show-checkbox
-                />
+                  show-checkbox />
               </div>
             </div>
           </el-form-item>
@@ -51,7 +38,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, nextTick } from "vue";
-import { authMenuAllApi, authRoleEditApi } from "@/api/modules/role";
+import { authMenuAllApi, authRoleEditApi } from "@/api/modules/sys/role";
 import { ElMessage } from "element-plus";
 import type { CheckboxValueType, ElTree } from "element-plus";
 import { treeToArray } from "@/utils/index";
@@ -68,7 +55,7 @@ const formData = reactive({
   name: "",
   desc: "",
   sort: 0,
-  menu_id: [] as any[]
+  menu_id: [] as any[],
 });
 const isExpand = ref(false);
 const checkStrictly = ref(true);
@@ -173,7 +160,7 @@ function open(data: any) {
 
 defineExpose({
   open,
-  setFormData
+  setFormData,
 });
 </script>
 

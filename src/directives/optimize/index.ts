@@ -1,10 +1,4 @@
-import {
-  isFunction,
-  isObject,
-  isArray,
-  debounce,
-  throttle
-} from "@/lib/baseUtils";
+import { isFunction, isObject, debounce, throttle } from "@zhonghe/utils";
 import { useEventListener } from "@vueuse/core";
 import type { Directive, DirectiveBinding } from "vue";
 
@@ -18,12 +12,10 @@ export const optimize: Directive = {
       if (value && value.event && isFunction(value.fn)) {
         let params = value?.params;
         if (params) {
-          if (isArray(params) || isObject(params)) {
+          if (Array.isArray(params) || isObject(params)) {
             params = isObject(params) ? Array.of(params) : params;
           } else {
-            throw new Error(
-              "[Directive: optimize]: `params` must be an array or object"
-            );
+            throw new Error("[Directive: optimize]: `params` must be an array or object");
           }
         }
         // Register using addEventListener on mounted, and removeEventListener automatically on unmounted
@@ -31,25 +23,14 @@ export const optimize: Directive = {
           el,
           value.event,
           type === "debounce"
-            ? debounce(
-                params ? () => value.fn(...params) : value.fn,
-                value?.timeout ?? 200,
-                value?.immediate ?? false
-              )
-            : throttle(
-                params ? () => value.fn(...params) : value.fn,
-                value?.timeout ?? 1000
-              )
+            ? debounce(params ? () => value.fn(...params) : value.fn, value?.timeout ?? 200, value?.immediate ?? false)
+            : throttle(params ? () => value.fn(...params) : value.fn, value?.timeout ?? 1000),
         );
       } else {
-        throw new Error(
-          "[Directive: optimize]: `event` and `fn` are required, and `fn` must be a function"
-        );
+        throw new Error("[Directive: optimize]: `event` and `fn` are required, and `fn` must be a function");
       }
     } else {
-      throw new Error(
-        "[Directive: optimize]: only `debounce` and `throttle` are supported"
-      );
+      throw new Error("[Directive: optimize]: only `debounce` and `throttle` are supported");
     }
-  }
+  },
 };

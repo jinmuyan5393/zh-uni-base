@@ -2,25 +2,19 @@ import { store } from "@/store";
 import { appType } from "./types";
 import { defineStore } from "pinia";
 import { getConfig, responsiveStorageNameSpace } from "@/config";
-import { deviceDetection, storageLocal } from "@/lib/baseUtils";
+import { deviceDetection, storageLocal } from "@zhonghe/utils";
 
 export const useAppStore = defineStore({
   id: "zh-app",
   state: (): appType => ({
     sidebar: {
-      opened:
-        storageLocal().getItem<StorageConfigs>(
-          `${responsiveStorageNameSpace()}layout`
-        )?.sidebarStatus ?? getConfig().SidebarStatus,
+      opened: storageLocal.getItem(`${responsiveStorageNameSpace()}layout`)?.sidebarStatus ?? getConfig().SidebarStatus,
       withoutAnimation: false,
-      isClickCollapse: false
+      isClickCollapse: false,
     },
     // 这里的layout用于监听容器拖拉后恢复对应的导航模式
-    layout:
-      storageLocal().getItem<StorageConfigs>(
-        `${responsiveStorageNameSpace()}layout`
-      )?.layout ?? getConfig().Layout,
-    device: deviceDetection() ? "mobile" : "desktop"
+    layout: storageLocal.getItem(`${responsiveStorageNameSpace()}layout`)?.layout ?? getConfig().Layout,
+    device: deviceDetection() ? "mobile" : "desktop",
   }),
   getters: {
     getSidebarStatus(state) {
@@ -28,13 +22,11 @@ export const useAppStore = defineStore({
     },
     getDevice(state) {
       return state.device;
-    }
+    },
   },
   actions: {
     TOGGLE_SIDEBAR(opened?: boolean, resize?: string) {
-      const layout = storageLocal().getItem<StorageConfigs>(
-        `${responsiveStorageNameSpace()}layout`
-      );
+      const layout = storageLocal.getItem(`${responsiveStorageNameSpace()}layout`);
       if (opened && resize) {
         this.sidebar.withoutAnimation = true;
         this.sidebar.opened = true;
@@ -49,7 +41,7 @@ export const useAppStore = defineStore({
         this.sidebar.isClickCollapse = !this.sidebar.opened;
         layout.sidebarStatus = this.sidebar.opened;
       }
-      storageLocal().setItem(`${responsiveStorageNameSpace()}layout`, layout);
+      storageLocal.setItem(`${responsiveStorageNameSpace()}layout`, layout);
     },
     async toggleSideBar(opened?: boolean, resize?: string) {
       await this.TOGGLE_SIDEBAR(opened, resize);
@@ -59,8 +51,8 @@ export const useAppStore = defineStore({
     },
     setLayout(layout) {
       this.layout = layout;
-    }
-  }
+    },
+  },
 });
 
 export function useAppStoreHook() {

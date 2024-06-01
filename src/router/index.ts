@@ -1,7 +1,7 @@
 import { getConfig } from "@/config";
 import NProgress from "@/utils/progress";
 import { transformI18n } from "@/plugins/i18n";
-import { sessionKey, type DataInfo } from "@/utils/auth";
+import { sessionKey } from "@/utils/auth";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import { Router, createRouter, RouteRecordRaw, RouteComponent } from "vue-router";
@@ -16,7 +16,7 @@ import {
   formatFlatteningRoutes,
 } from "./utils";
 import { buildHierarchyTree } from "@/utils/tree";
-import { isUrl, openLink, storageLocal, isAllEmpty } from "@/lib/baseUtils";
+import { isUrl, openLink, storageLocal, isAllEmpty } from "@zhonghe/utils";
 
 import remainingRouter from "./modules/remaining";
 
@@ -90,7 +90,7 @@ router.beforeEach((to: ToRouteType, _from, next) => {
       handleAliveRoute(to);
     }
   }
-  const userInfo = storageLocal().getItem<DataInfo>(sessionKey);
+  const userInfo = storageLocal.getItem(sessionKey);
   NProgress.start();
   const externalLink = isUrl(to?.name as string);
   if (!externalLink) {

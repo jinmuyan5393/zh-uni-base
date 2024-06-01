@@ -7,7 +7,7 @@ import SearchFooter from "./SearchFooter.vue";
 import { useNav } from "@/layout/hooks/useNav";
 import { transformI18n } from "@/plugins/i18n";
 import { ref, computed, shallowRef } from "vue";
-import { cloneDeep, isAllEmpty } from "@/lib/baseUtils";
+import { cloneDeep, isAllEmpty } from "@zhonghe/utils";
 import { useDebounceFn, onKeyStroke } from "@vueuse/core";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 
@@ -45,7 +45,7 @@ const show = computed({
   },
   set(val: boolean) {
     emit("update:value", val);
-  }
+  },
 });
 
 /** 将菜单树形结构扁平化为一维数组，用于菜单查询 */
@@ -66,17 +66,9 @@ function search() {
   const flatMenusData = flatTree(menusData.value);
   resultOptions.value = flatMenusData.filter(menu =>
     keyword.value
-      ? transformI18n(menu.title)
-          .toLocaleLowerCase()
-          .includes(keyword.value.toLocaleLowerCase().trim()) ||
-        (locale.value === "zh" &&
-          !isAllEmpty(
-            match(
-              transformI18n(menu.title).toLocaleLowerCase(),
-              keyword.value.toLocaleLowerCase().trim()
-            )
-          ))
-      : false
+      ? transformI18n(menu.title).toLocaleLowerCase().includes(keyword.value.toLocaleLowerCase().trim()) ||
+        (locale.value === "zh" && !isAllEmpty(match(transformI18n(menu.title).toLocaleLowerCase(), keyword.value.toLocaleLowerCase().trim())))
+      : false,
   );
   if (resultOptions.value?.length > 0) {
     activePath.value = resultOptions.value[0].path;
@@ -103,9 +95,7 @@ function scrollTo(index) {
 function handleUp() {
   const { length } = resultOptions.value;
   if (length === 0) return;
-  const index = resultOptions.value.findIndex(
-    item => item.path === activePath.value
-  );
+  const index = resultOptions.value.findIndex(item => item.path === activePath.value);
   if (index === 0) {
     activePath.value = resultOptions.value[length - 1].path;
     scrollTo(resultOptions.value.length - 1);
@@ -119,9 +109,7 @@ function handleUp() {
 function handleDown() {
   const { length } = resultOptions.value;
   if (length === 0) return;
-  const index = resultOptions.value.findIndex(
-    item => item.path === activePath.value
-  );
+  const index = resultOptions.value.findIndex(item => item.path === activePath.value);
   if (index + 1 === length) {
     activePath.value = resultOptions.value[0].path;
   } else {
@@ -152,40 +140,20 @@ onKeyStroke("ArrowDown", handleDown);
     :width="device === 'mobile' ? '80vw' : '40vw'"
     :before-close="handleClose"
     :style="{
-      borderRadius: '6px'
+      borderRadius: '6px',
     }"
     append-to-body
     @opened="inputRef.focus()"
-    @closed="inputRef.blur()"
-  >
-    <el-input
-      ref="inputRef"
-      size="large"
-      v-model="keyword"
-      clearable
-      placeholder="搜索菜单"
-      @input="handleSearch"
-    >
+    @closed="inputRef.blur()">
+    <el-input ref="inputRef" size="large" v-model="keyword" clearable placeholder="搜索菜单" @input="handleSearch">
       <template #prefix>
-        <BaseIcon
-          name="el-icon-Search"
-          class="text-primary w-[24px] h-[24px]"
-        />
+        <BaseIcon name="el-icon-Search" class="text-primary w-[24px] h-[24px]" />
       </template>
     </el-input>
     <div class="search-result-container">
       <el-scrollbar ref="scrollbarRef" max-height="calc(90vh - 140px)">
-        <el-empty
-          v-if="resultOptions.length === 0"
-          description="暂无搜索结果"
-        />
-        <SearchResult
-          v-else
-          ref="resultRef"
-          v-model:value="activePath"
-          :options="resultOptions"
-          @click="handleEnter"
-        />
+        <el-empty v-if="resultOptions.length === 0" description="暂无搜索结果" />
+        <SearchResult v-else ref="resultRef" v-model:value="activePath" :options="resultOptions" @click="handleEnter" />
       </el-scrollbar>
     </div>
     <template #footer>

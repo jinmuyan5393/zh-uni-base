@@ -4,7 +4,7 @@ import { useRoute } from "vue-router";
 import { ref, unref, onMounted, nextTick } from "vue";
 
 defineOptions({
-  name: "FrameView"
+  name: "FrameView",
 });
 
 const { t } = useI18n();
@@ -45,11 +45,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    class="frame"
-    v-loading="loading"
-    :element-loading-text="t('status.hsLoad')"
-  >
+  <div class="frame" v-loading="loading" :element-loading-text="t('status.hsLoad')">
     <iframe :src="frameSrc" class="frame-iframe" ref="frameRef" />
   </div>
 </template>

@@ -3,22 +3,9 @@ import { storageLocal, storageSession } from "./storage";
 import { copyTextToClipboard } from "./copyText";
 import useDark from "./useDark";
 import { useGlobal } from "./useGlobal";
-import {
-  isEqual,
-  isBoolean,
-  isObject,
-  isFunction,
-  cloneDeep,
-  isString,
-  isArray,
-  isNull,
-  isUndefined
-} from "lodash-es";
+import { isEqual, isBoolean, isObject, isFunction, cloneDeep, isString, isArray, isNull, isUndefined } from "lodash-es";
 
-export const withInstall = <T, E extends Record<string, any>>(
-  main: T,
-  extra?: E
-) => {
+export const withInstall = <T, E extends Record<string, any>>(main: T, extra?: E) => {
   (main as SFCWithInstall<T>).install = (app): void => {
     for (const comp of [main, ...Object.values(extra ?? {})]) {
       app.component(comp.name, comp);
@@ -36,8 +23,7 @@ export const withInstall = <T, E extends Record<string, any>>(
 // 判断当前设备是mobile还是desktop
 export function deviceDetection(): boolean {
   const userAgent = window.navigator.userAgent;
-  const mobileRegex =
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+  const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
 
   if (mobileRegex.test(userAgent)) {
     return true;
@@ -71,9 +57,7 @@ function subBefore(str, n) {
  * @returns 字符串中第n个出现的子字符串之后的字符串
  */
 function subAfter(str, n) {
-  return isString(n)
-    ? str.substring(str.lastIndexOf(n) + n.length, str.length)
-    : "";
+  return isString(n) ? str.substring(str.lastIndexOf(n) + n.length, str.length) : "";
 }
 
 /**
@@ -101,10 +85,7 @@ function openLink(href: string, target = "_blank"): void {
     element.setAttribute("rel", "noreferrer noopener"),
     element.setAttribute("id", "external");
   const dom = document.getElementById("external");
-  dom && document.body.removeChild(dom),
-    document.body.appendChild(element),
-    element.click(),
-    element.remove();
+  dom && document.body.removeChild(dom), document.body.appendChild(element), element.click(), element.remove();
 }
 
 /**
@@ -120,10 +101,7 @@ function intersection(...rest: any[]) {
  * @param c 子体
  * @param m 母体
  */
-function isIncludeAllChildren(
-  c: Array<string | number | unknown>,
-  m: Array<unknown>
-): boolean {
+function isIncludeAllChildren(c: Array<string | number | unknown>, m: Array<unknown>): boolean {
   return c.every(childElement => m.includes(childElement));
 }
 
@@ -150,8 +128,7 @@ function isNullOrUndef(t) {
 }
 
 // 判断元素中是否有对应的类名
-const hasClass = (element: HTMLElement | Element, name: string): boolean =>
-  !!element?.className.match(new RegExp("(\\s|^)" + name + "(\\s|$)"));
+const hasClass = (element: HTMLElement | Element, name: string): boolean => !!element?.className.match(new RegExp("(\\s|^)" + name + "(\\s|$)"));
 
 /**
  * @description 是否向当前元素添加指定类名
@@ -159,11 +136,7 @@ const hasClass = (element: HTMLElement | Element, name: string): boolean =>
  * @param name 类名
  * @param element 当前元素（可选，如果不填，默认 `document.body` ）
  */
-function toggleClass(
-  bool: boolean,
-  name: string,
-  element?: HTMLElement | Element
-) {
+function toggleClass(bool: boolean, name: string, element?: HTMLElement | Element) {
   const rootEle = element || document.body;
   const { className: s } = rootEle;
   const o = s.replace(name, "").trim().split(/\s+/).join(" ");
@@ -198,10 +171,7 @@ const debounce = (targetFunction, delay = 200, immediate = false) => {
     } else {
       // 延迟执行模式
       // 设置一个新的定时器，在延迟时间 waitTime 后执行目标函数
-      timerId = setTimeout(
-        () => targetFunction.call(context, ...args),
-        waitTime
-      );
+      timerId = setTimeout(() => targetFunction.call(context, ...args), waitTime);
     }
   };
 };
@@ -252,10 +222,10 @@ export {
   useDark,
   useGlobal,
   hasClass,
-  toggleClass
+  toggleClass,
 };
 export default {
   withInstall,
   storageLocal,
-  storageSession
+  storageSession,
 };

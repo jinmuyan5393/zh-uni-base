@@ -144,7 +144,7 @@ import { ref, reactive, onMounted } from "vue";
 import IconPicker from "@/components/BaseIcon/picker.vue";
 import { MenuEnum } from "@/enums/appEnum";
 import { arrayToTree, treeToArray } from "@/utils";
-import { authMenuListApi, authMenuAddApi, authMenuEditApi, authMenuDetailApi } from "@/api/modules/role";
+import { authMenuListApi, authMenuAddApi, authMenuEditApi, authMenuDetailApi } from "@/api/modules/sys/role";
 import { getModulesKey } from "@/router/utils";
 import { ElMessage } from "element-plus";
 const emits = defineEmits(["success"]);

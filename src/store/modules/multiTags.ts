@@ -3,52 +3,35 @@ import { store } from "@/store";
 import { routerArrays } from "@/layout/types";
 import { multiType, positionType } from "./types";
 import { responsiveStorageNameSpace } from "@/config";
-import { isEqual, isUrl, storageLocal } from "@/lib/baseUtils";
+import { isEqual, isUrl, storageLocal } from "@zhonghe/utils";
 
 export const useMultiTagsStore = defineStore({
   id: "zh-multiTags",
   state: () => ({
     // 存储标签页信息（路由信息）
-    multiTags: storageLocal().getItem<StorageConfigs>(
-      `${responsiveStorageNameSpace()}configure`
-    )?.multiTagsCache
-      ? storageLocal().getItem<StorageConfigs>(
-          `${responsiveStorageNameSpace()}tags`
-        )
+    multiTags: storageLocal.getItem(`${responsiveStorageNameSpace()}configure`)?.multiTagsCache
+      ? storageLocal.getItem(`${responsiveStorageNameSpace()}tags`)
       : [...routerArrays],
-    multiTagsCache: storageLocal().getItem<StorageConfigs>(
-      `${responsiveStorageNameSpace()}configure`
-    )?.multiTagsCache
+    multiTagsCache: storageLocal.getItem(`${responsiveStorageNameSpace()}configure`)?.multiTagsCache,
   }),
   getters: {
     getMultiTagsCache(state) {
       return state.multiTagsCache;
-    }
+    },
   },
   actions: {
     multiTagsCacheChange(multiTagsCache: boolean) {
       this.multiTagsCache = multiTagsCache;
       if (multiTagsCache) {
-        storageLocal().setItem(
-          `${responsiveStorageNameSpace()}tags`,
-          this.multiTags
-        );
+        storageLocal.setItem(`${responsiveStorageNameSpace()}tags`, this.multiTags);
       } else {
-        storageLocal().removeItem(`${responsiveStorageNameSpace()}tags`);
+        storageLocal.removeItem(`${responsiveStorageNameSpace()}tags`);
       }
     },
     tagsCache(multiTags) {
-      this.getMultiTagsCache &&
-        storageLocal().setItem(
-          `${responsiveStorageNameSpace()}tags`,
-          multiTags
-        );
+      this.getMultiTagsCache && storageLocal.setItem(`${responsiveStorageNameSpace()}tags`, multiTags);
     },
-    handleTags<T>(
-      mode: string,
-      value?: T | multiType,
-      position?: positionType
-    ): T {
+    handleTags<T>(mode: string, value?: T | multiType, position?: positionType): T {
       switch (mode) {
         case "equal":
           this.multiTags = value;
@@ -87,14 +70,9 @@ export const useMultiTagsStore = defineStore({
             // 动态路由可打开的最大数量
             const dynamicLevel = tagVal?.dynamicLevel ?? -1;
             if (dynamicLevel > 0) {
-              if (
-                this.multiTags.filter(e => e?.path === tagPath).length >=
-                dynamicLevel
-              ) {
+              if (this.multiTags.filter(e => e?.path === tagPath).length >= dynamicLevel) {
                 // 如果当前已打开的动态路由数大于dynamicLevel，替换第一个动态路由标签
-                const index = this.multiTags.findIndex(
-                  item => item?.path === tagPath
-                );
+                const index = this.multiTags.findIndex(item => item?.path === tagPath);
                 index !== -1 && this.multiTags.splice(index, 1);
               }
             }
@@ -115,8 +93,8 @@ export const useMultiTagsStore = defineStore({
         case "slice":
           return this.multiTags.slice(-1);
       }
-    }
-  }
+    },
+  },
 });
 
 export function useMultiTagsStoreHook() {

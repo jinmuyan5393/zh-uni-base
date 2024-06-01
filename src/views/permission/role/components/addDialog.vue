@@ -1,29 +1,12 @@
 <template>
   <div class="addDialog">
     <!-- 添加或修改菜单对话框 -->
-    <el-dialog
-      :title="title"
-      v-model="visible"
-      width="800px"
-      class="zh-dialog"
-      :before-close="handleClose"
-      append-to-body
-    >
-      <el-form
-        ref="formRef"
-        :model="formData"
-        label-width="85px"
-        :rules="formRules"
-      >
+    <el-dialog :title="title" v-model="visible" width="800px" class="zh-dialog" :before-close="handleClose" append-to-body>
+      <el-form ref="formRef" :model="formData" label-width="85px" :rules="formRules">
         <el-row :gutter="30">
           <re-col>
             <el-form-item label="名称" prop="name">
-              <el-input
-                class="ls-input"
-                v-model="formData.name"
-                placeholder="请输入名称"
-                clearable
-              />
+              <el-input class="ls-input" v-model="formData.name" placeholder="请输入名称" clearable />
             </el-form-item>
           </re-col>
           <re-col>
@@ -34,8 +17,7 @@
                 :autosize="{ minRows: 4, maxRows: 6 }"
                 placeholder="请输入备注"
                 maxlength="200"
-                show-word-limit
-              />
+                show-word-limit />
             </el-form-item>
           </re-col>
           <re-col>
@@ -57,11 +39,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue";
-import {
-  authRoleDetailApi,
-  authRoleAddApi,
-  authRoleEditApi
-} from "@/api/modules/role";
+import { authRoleDetailApi, authRoleAddApi, authRoleEditApi } from "@/api/modules/sys/role";
 import { ElMessage } from "element-plus";
 const emits = defineEmits(["success"]);
 onMounted(() => {});
@@ -75,7 +53,7 @@ const formData = reactive({
   name: "",
   desc: "",
   sort: 0,
-  menu_id: []
+  menu_id: [],
 });
 
 const formRules = reactive({
@@ -83,9 +61,9 @@ const formRules = reactive({
     {
       required: true,
       message: "请输入名称",
-      trigger: ["blur"]
-    }
-  ]
+      trigger: ["blur"],
+    },
+  ],
 });
 
 const setFormData = (data: Record<any, any>) => {
@@ -99,7 +77,7 @@ const setFormData = (data: Record<any, any>) => {
 // 获取菜单详情
 const getDetail = async () => {
   const res = await authRoleDetailApi({
-    id: curRow.value.id
+    id: curRow.value.id,
   });
   setFormData(res.data);
 };
@@ -163,7 +141,7 @@ function open(data: any) {
 
 defineExpose({
   open,
-  setFormData
+  setFormData,
 });
 </script>
 

@@ -3,7 +3,7 @@ import { ref, onMounted, reactive } from "vue";
 import { ElMessageBox, ElMessage } from "element-plus";
 import AddDialog from "./components/addDialog.vue";
 import AuthDialog from "./components/authDialog.vue";
-import { authRoleListApi, authRoleDeleteApi } from "@/api/modules/role";
+import { authRoleListApi, authRoleDeleteApi } from "@/api/modules/sys/role";
 
 onMounted(() => {
   queryList();

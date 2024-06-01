@@ -68,11 +68,11 @@
 import { ref, onMounted } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { useUserStoreHook } from "@/store/modules/user";
-import { storageLocal } from "@/lib/baseUtils";
+import { storageLocal } from "@zhonghe/utils";
 import md5 from "md5";
 import feedback from "@/utils/feedback";
 import { isRoleIn } from "@/utils/auth";
-import { authRoleCenterApi, authAdminEditSelfApi, setLeaveStatusApi, setWorkeStatusApi } from "@/api/modules/role";
+import { authRoleCenterApi, authAdminEditSelfApi, setLeaveStatusApi, setWorkeStatusApi } from "@/api/modules/sys/role";
 import { RoleEnum } from "@/enums/appEnum";
 onMounted(() => {
   queryUserInfo();
@@ -148,8 +148,8 @@ function submitForm() {
           });
           userStore.SET_USERNAME(res.data.name);
           userStore.SET_AVATAR(res.data.avatar);
-          const userinfo = storageLocal().getItem("user-info");
-          storageLocal().setItem("user-info", {
+          const userinfo = storageLocal.getItem("user-info");
+          storageLocal.setItem("user-info", {
             ...userinfo,
             avatar: res.data.avatar,
           });

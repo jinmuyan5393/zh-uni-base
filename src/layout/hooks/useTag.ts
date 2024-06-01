@@ -1,13 +1,4 @@
-import {
-  ref,
-  unref,
-  watch,
-  computed,
-  reactive,
-  onMounted,
-  CSSProperties,
-  getCurrentInstance
-} from "vue";
+import { ref, unref, watch, computed, reactive, onMounted, CSSProperties, getCurrentInstance } from "vue";
 import { tagsViewsType } from "../types";
 import { useEventListener } from "@vueuse/core";
 import { useRoute, useRouter } from "vue-router";
@@ -15,8 +6,7 @@ import { transformI18n, $t } from "@/plugins/i18n";
 import { responsiveStorageNameSpace } from "@/config";
 import { useSettingStoreHook } from "@/store/modules/settings";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
-import { toggleClass, hasClass } from "@/lib/baseUtils";
-import { isEqual, isBoolean, storageLocal } from "@/lib/baseUtils";
+import { toggleClass, hasClass, isEqual, storageLocal } from "@zhonghe/utils";
 
 export function useTags() {
   const route = useRoute();
@@ -33,18 +23,9 @@ export function useTags() {
   const currentSelect = ref({});
 
   /** 显示模式，默认灵动模式 */
-  const showModel = ref(
-    storageLocal().getItem<StorageConfigs>(
-      `${responsiveStorageNameSpace()}configure`
-    )?.showModel || "smart"
-  );
+  const showModel = ref(storageLocal.getItem(`${responsiveStorageNameSpace()}configure`)?.showModel || "smart");
   /** 是否隐藏标签页，默认显示 */
-  const showTags =
-    ref(
-      storageLocal().getItem<StorageConfigs>(
-        `${responsiveStorageNameSpace()}configure`
-      ).hideTabs
-    ) ?? ref("false");
+  const showTags = ref(storageLocal.getItem(`${responsiveStorageNameSpace()}configure`).hideTabs) ?? ref("false");
   const multiTags: any = computed(() => {
     return useMultiTagsStoreHook().multiTags;
   });
@@ -55,61 +36,61 @@ export function useTags() {
       text: $t("buttons.hsreload"),
       divided: false,
       disabled: false,
-      show: true
+      show: true,
     },
     {
       icon: "el-icon-Close",
       text: $t("buttons.hscloseCurrentTab"),
       divided: false,
       disabled: multiTags.value.length > 1 ? false : true,
-      show: true
+      show: true,
     },
     {
       icon: "local-icon-closeLeft",
       text: $t("buttons.hscloseLeftTabs"),
       divided: true,
       disabled: multiTags.value.length > 1 ? false : true,
-      show: true
+      show: true,
     },
     {
       icon: "local-icon-closeRight",
       text: $t("buttons.hscloseRightTabs"),
       divided: false,
       disabled: multiTags.value.length > 1 ? false : true,
-      show: true
+      show: true,
     },
     {
       icon: "local-icon-closeOther",
       text: $t("buttons.hscloseOtherTabs"),
       divided: true,
       disabled: multiTags.value.length > 2 ? false : true,
-      show: true
+      show: true,
     },
     {
       icon: "local-icon-closeAll",
       text: $t("buttons.hscloseAllTabs"),
       divided: false,
       disabled: multiTags.value.length > 1 ? false : true,
-      show: true
+      show: true,
     },
     {
       icon: "local-icon-fullscreen",
       text: $t("buttons.hswholeFullScreen"),
       divided: true,
       disabled: false,
-      show: true
+      show: true,
     },
     {
       icon: "local-icon-fullscreen-exit",
       text: $t("buttons.hscontentFullScreen"),
       divided: false,
       disabled: false,
-      show: true
-    }
+      show: true,
+    },
   ]);
 
   function conditionHandle(item, previous, next) {
-    if (isBoolean(route?.showLink) && route?.showLink === false) {
+    if (route?.showLink === false) {
       if (Object.keys(route.query).length > 0) {
         return isEqual(route.query, item.query) ? previous : next;
       } else {
@@ -141,7 +122,7 @@ export function useTags() {
 
   const getTabStyle = computed((): CSSProperties => {
     return {
-      transform: `translateX(${translateX.value}px)`
+      transform: `translateX(${translateX.value}px)`,
     };
   });
 
@@ -157,8 +138,7 @@ export function useTags() {
   function onMouseenter(index) {
     if (index) activeIndex.value = index;
     if (unref(showModel) === "smart") {
-      if (hasClass(instance.refs["schedule" + index][0], "schedule-active"))
-        return;
+      if (hasClass(instance.refs["schedule" + index][0], "schedule-active")) return;
       toggleClass(true, "schedule-in", instance.refs["schedule" + index][0]);
       toggleClass(false, "schedule-out", instance.refs["schedule" + index][0]);
     } else {
@@ -172,8 +152,7 @@ export function useTags() {
   function onMouseleave(index) {
     activeIndex.value = -1;
     if (unref(showModel) === "smart") {
-      if (hasClass(instance.refs["schedule" + index][0], "schedule-active"))
-        return;
+      if (hasClass(instance.refs["schedule" + index][0], "schedule-active")) return;
       toggleClass(false, "schedule-in", instance.refs["schedule" + index][0]);
       toggleClass(true, "schedule-out", instance.refs["schedule" + index][0]);
     } else {
@@ -191,14 +170,9 @@ export function useTags() {
 
   onMounted(() => {
     if (!showModel.value) {
-      const configure = storageLocal().getItem<StorageConfigs>(
-        `${responsiveStorageNameSpace()}configure`
-      );
+      const configure = storageLocal.getItem(`${responsiveStorageNameSpace()}configure`);
       configure.showModel = "card";
-      storageLocal().setItem(
-        `${responsiveStorageNameSpace()}configure`,
-        configure
-      );
+      storageLocal.setItem(`${responsiveStorageNameSpace()}configure`, configure);
     }
   });
 
@@ -206,7 +180,7 @@ export function useTags() {
     () => visible.value,
     () => {
       useEventListener(document, "click", closeMenu);
-    }
+    },
   );
 
   return {
@@ -235,6 +209,6 @@ export function useTags() {
     onMouseenter,
     onMouseleave,
     transformI18n,
-    onContentFullScreen
+    onContentFullScreen,
   };
 }

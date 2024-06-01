@@ -1,4 +1,4 @@
-import { isAllEmpty } from "@/lib/baseUtils";
+import { isAllEmpty } from "@zhonghe/utils";
 enum StorageType {
   LOCAL = "local",
   SESSION = "session",

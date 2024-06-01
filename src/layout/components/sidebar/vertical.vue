@@ -1,8 +1,3 @@
-<!--
- * @Description:
- * @Author: jinmuyan
- * @LastEditTime: 2024-05-11 10:13:27
--->
 <script setup lang="ts">
 import Logo from "./logo.vue";
 import { useRoute } from "vue-router";
@@ -11,13 +6,13 @@ import SidebarItem from "./sidebarItem.vue";
 import leftCollapse from "./leftCollapse.vue";
 import { useNav } from "@/layout/hooks/useNav";
 import { responsiveStorageNameSpace } from "@/config";
-import { storageLocal, isAllEmpty } from "@/lib/baseUtils";
+import { storageLocal, isAllEmpty } from "@zhonghe/utils";
 import { findRouteByPath, getParentPaths } from "@/router/utils";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import { ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
 
 const route = useRoute();
-const showLogo = ref(storageLocal().getItem<any>(`${responsiveStorageNameSpace()}configure`)?.showLogo ?? true);
+const showLogo = ref(storageLocal.getItem(`${responsiveStorageNameSpace()}configure`)?.showLogo ?? true);
 
 const { device, appStore, isCollapse, menuSelect, toggleSideBar } = useNav();
 

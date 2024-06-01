@@ -2,7 +2,7 @@ import { RouterHistory, RouteRecordRaw, RouteComponent, createWebHistory, create
 import { router } from "./index";
 import { isProxy, toRaw } from "vue";
 import { useTimeoutFn } from "@vueuse/core";
-import { isString, cloneDeep, intersection, isAllEmpty, isIncludeAllChildren } from "@/lib/baseUtils";
+import { isString, cloneDeep, intersection, isAllEmpty, isIncludeAllChildren } from "@zhonghe/utils";
 import { menuType } from "@/layout/types";
 import { buildHierarchyTree } from "@/utils/tree";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
@@ -12,7 +12,7 @@ const IFrame = () => import("@/layout/frameView.vue");
 const modulesRoutes = import.meta.glob("/src/views/**/*.{vue,tsx}");
 
 // 动态路由
-import { getAsyncRoutes } from "@/api/modules/routes";
+import { getAsyncRoutes } from "@/api/modules/sys/routes";
 
 export function getModulesKey() {
   return Object.keys(modulesRoutes).map(item => item.replace("/src/views/", "").replace(".vue", ""));

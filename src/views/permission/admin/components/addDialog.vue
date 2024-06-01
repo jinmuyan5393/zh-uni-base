@@ -93,8 +93,8 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue";
-import { authRoleAllApi, authAdminDetailApi, authAdminAddApi, authAdminEditApi } from "@/api/modules/role";
-import { authDeptListApi, authJobAllApi } from "@/api/modules/org";
+import { authRoleAllApi, authAdminDetailApi, authAdminAddApi, authAdminEditApi } from "@/api/modules/sys/role";
+import { authDeptListApi, authJobAllApi } from "@/api/modules/sys/org";
 import { useDictOptions } from "@/hooks/useDictOptions";
 import md5 from "md5";
 import { ElMessage } from "element-plus";

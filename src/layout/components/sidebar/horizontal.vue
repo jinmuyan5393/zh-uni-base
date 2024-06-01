@@ -2,7 +2,7 @@
 import Search from "../search/index.vue";
 import Notice from "../notice/index.vue";
 import SidebarItem from "./sidebarItem.vue";
-import { isAllEmpty } from "@/lib/baseUtils";
+import { isAllEmpty } from "@zhonghe/utils";
 import { ref, nextTick, computed } from "vue";
 import { useNav } from "@/layout/hooks/useNav";
 import { useTranslationLang } from "../../hooks/useTranslationLang";

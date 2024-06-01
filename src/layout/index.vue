@@ -5,7 +5,8 @@ import { useLayout } from "./hooks/useLayout";
 import { useResizeObserver } from "@vueuse/core";
 import { useAppStoreHook } from "@/store/modules/app";
 import { useSettingStoreHook } from "@/store/modules/settings";
-import { deviceDetection, useDark, useGlobal } from "@/lib/baseUtils";
+import { useDark, useGlobal } from "@/lib/baseUtils";
+import { deviceDetection } from "@zhonghe/utils";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
 import { h, ref, reactive, computed, onMounted, onBeforeMount, defineComponent } from "vue";
 

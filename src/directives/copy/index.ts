@@ -5,7 +5,7 @@
  */
 import feedback from "@/utils/feedback";
 import { useEventListener } from "@vueuse/core";
-import { copyTextToClipboard } from "@/lib/baseUtils";
+import { copyTextToClipboard } from "@zhonghe/utils";
 import type { Directive, DirectiveBinding } from "vue";
 
 interface CopyEl extends HTMLElement {
