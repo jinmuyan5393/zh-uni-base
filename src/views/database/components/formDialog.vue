@@ -10,7 +10,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { settingSystemTablesInfoApi } from "@/api/modules/sys/database";
-import validation from "./validate";
 onMounted(() => {});
 const title = ref("添加");
 const visible = ref(false);
@@ -50,15 +49,11 @@ const columns = ref<any>([
     minWidth: 160,
   },
 ]);
-const setFormData = (data: Record<any, any>) => {
-  validation.formData = data;
-};
 
 // 关闭弹窗
 function handleClose() {
   visible.value = false;
   curRow.value = {};
-  validation.resetForm();
 }
 
 // 打开弹窗
@@ -81,7 +76,6 @@ function detail(params) {
 
 defineExpose({
   open,
-  setFormData,
 });
 </script>
 
