@@ -102,12 +102,12 @@ export const authRoleCenterApi = () => {
   return http.get("/admin/auth_role/center");
 };
 
-// 设置自身为空闲状态
-export const setLeaveStatusApi = () => {
-  return http.post("/admin/center.operator_center/setLeaveStatus");
+// 个人中心详情
+export const authMySelfApi = () => {
+  return http.get("/admin/auth.admin/mySelf");
 };
 
-// 设置自身为工作状态
-export const setWorkeStatusApi = () => {
-  return http.post("/admin/center.operator_center/setWorkeStatus");
+// 编辑个人信息
+export const authEditSelfApi = (data: any) => {
+  return http.post("/admin/auth.admin/editSelf", data);
 };

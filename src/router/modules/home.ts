@@ -14,14 +14,14 @@ export default {
       path: "/home",
       name: "Welcome",
       component: () => import("@/views/home/index.vue"),
-      title: $t("menus.hshome")
+      title: $t("menus.hshome"),
     },
     {
       path: "/personInfo",
       name: "personInfo",
       showLink: "False",
       component: () => import("@/views/personInfo/index.vue"),
-      title: $t("buttons.hsUserinfo")
-    }
-  ]
+      title: $t("buttons.hsUserinfo"),
+    },
+  ],
 };

@@ -70,6 +70,7 @@ declare global {
     CachingAsyncRoutes?: boolean;
     TooltipEffect?: Effect;
     ResponsiveStorageNameSpace?: string;
+    isTest?: boolean;
     isMock1?: boolean;
     isMock2?: boolean;
     isMock3?: boolean;

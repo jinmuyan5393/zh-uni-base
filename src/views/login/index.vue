@@ -21,6 +21,8 @@ import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
 import globalization from "@/assets/svg/globalization.svg?component";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import md5 from "md5";
+import { getConfig } from "@/config";
+import feedback from "@/utils/feedback";
 
 defineOptions({
   name: "Login",
@@ -48,6 +50,8 @@ const onLogin = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
+      const config = getConfig() || {};
+
       useUserStoreHook()
         .loginByUsername({
           account: ruleForm.username,
@@ -56,6 +60,9 @@ const onLogin = async (formEl: FormInstance | undefined) => {
         })
         .then((res: any) => {
           if (res.code == 1) {
+            if (config.isTest) {
+              feedback.alertWarning("此环境为演示环境，数据仅作为演示数据使用，不作为正式数据！！");
+            }
             // 获取后端路由
             initRouter().then(() => {
               router.push("/home");
@@ -105,7 +112,7 @@ onBeforeUnmount(() => {
       <!-- 主题 -->
       <!-- <el-switch v-model="dataTheme" inline-prompt :active-icon="dayIcon" :inactive-icon="darkIcon" @change="dataThemeChange" /> -->
       <!-- 国际化 -->
-      <el-dropdown trigger="click">
+      <!-- <el-dropdown trigger="click">
         <globalization class="hover:text-primary hover:!bg-[transparent] w-[20px] h-[20px] ml-1.5 cursor-pointer outline-none duration-300" />
         <template #dropdown>
           <el-dropdown-menu class="translation">
@@ -127,7 +134,7 @@ onBeforeUnmount(() => {
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
-      </el-dropdown>
+      </el-dropdown> -->
     </div>
     <div class="login-container">
       <!-- <div class="img">

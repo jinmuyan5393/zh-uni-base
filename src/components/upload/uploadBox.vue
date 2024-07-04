@@ -9,6 +9,7 @@
       :show-file-list="false"
       :headers="headers"
       :data="data"
+      :before-upload="handleBeforeUpload"
       :on-progress="handleProgress"
       :on-success="handleSuccess"
       :on-exceed="handleExceed"
@@ -16,25 +17,6 @@
       :accept="getAccept">
       <slot />
     </el-upload>
-    <el-dialog
-      v-if="showProgress && fileList.length"
-      v-model="visible"
-      title="上传进度"
-      :close-on-click-modal="false"
-      width="500px"
-      :modal="false"
-      @close="handleClose">
-      <div class="file-list p-4">
-        <template v-for="(item, index) in fileList" :key="index">
-          <div class="mb-5">
-            <div>{{ item.name }}</div>
-            <div class="flex-1">
-              <el-progress :percentage="parseInt(item.percentage)" />
-            </div>
-          </div>
-        </template>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
@@ -55,6 +37,15 @@ export default defineComponent({
     multiple: {
       type: Boolean,
       default: true,
+    },
+    // 当前文件长度
+    fileLength: {
+      type: Number,
+    },
+    // 文件大小限制 单位(MB)
+    fileSize: {
+      type: Number,
+      default: 10,
     },
     // 多选时最多选择几条
     limit: {
@@ -105,6 +96,17 @@ export default defineComponent({
         feedback.msgError(response.msg);
       }
     };
+    const handleBeforeUpload = (file: any) => {
+      // 文件大小限制
+      const isInSizeLimit = file.size / 1024 / 1024 < props.fileSize;
+      if (!isInSizeLimit) {
+        feedback.msgWarning(`文件${file.name}的大小超过${props.fileSize}MB, 请重新选择`);
+      }
+      // 文件数量限制
+      const isInLenLimit = props.fileLength < props.limit;
+      console.log("🚀 ~ handleBeforeUpload ~ fileLength:", props.fileLength);
+      return isInSizeLimit && isInLenLimit;
+    };
     const handleError = (event: any, file: any) => {
       uploadLen++;
       if (uploadLen == fileList.value.length) {
@@ -132,6 +134,8 @@ export default defineComponent({
           return ".jpg,.png,.gif,.jpeg,.ico";
         case "video":
           return ".wmv,.avi,.mpg,.mpeg,.3gp,.mov,.mp4,.flv,.rmvb,.mkv";
+        case "file":
+          return ".zip, .rar, .txt, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .csv, .txt, .ftr, .7z, .gz,.step, .prt, .dwg, .sldprt, .slddrw, .jpg, .png, .gif, .jpeg, .webp, .log";
         default:
           return "*";
       }
@@ -143,6 +147,7 @@ export default defineComponent({
       visible,
       fileList,
       getAccept,
+      handleBeforeUpload,
       handleProgress,
       handleSuccess,
       handleError,

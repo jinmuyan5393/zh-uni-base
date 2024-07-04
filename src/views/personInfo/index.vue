@@ -17,22 +17,14 @@
         </re-col>
         <re-col>
           <!-- 账号输入框 -->
-          <el-form-item label="昵称" prop="name">
-            <el-input v-model="formData.name" placeholder="请输入昵称" style="width: 320px" clearable />
+          <el-form-item label="角色" prop="roleName">
+            <el-input v-model="roleName" :disabled="true" placeholder="" style="width: 320px" clearable />
           </el-form-item>
         </re-col>
-        <re-col v-if="isOperator">
-          <el-form-item label="状态">
-            <el-switch
-              v-model="formData.operator.status"
-              class="ml-2"
-              inline-prompt
-              style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
-              :active-value="1"
-              :inactive-value="2"
-              active-text="工作中"
-              inactive-text="休息中"
-              :before-change="handleSwitchChange" />
+        <re-col>
+          <!-- 账号输入框 -->
+          <el-form-item label="昵称" prop="name">
+            <el-input v-model="formData.name" placeholder="请输入昵称" style="width: 320px" clearable />
           </el-form-item>
         </re-col>
         <re-col>
@@ -66,14 +58,11 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { ElMessage, ElMessageBox } from "element-plus";
+import { ElMessage } from "element-plus";
 import { useUserStoreHook } from "@/store/modules/user";
 import { storageLocal } from "@zhonghe/utils";
 import md5 from "md5";
-import feedback from "@/utils/feedback";
-import { isRoleIn } from "@/utils/auth";
-import { authRoleCenterApi, authAdminEditSelfApi, setLeaveStatusApi, setWorkeStatusApi } from "@/api/modules/sys/role";
-import { RoleEnum } from "@/enums/appEnum";
+import { authMySelfApi, authEditSelfApi } from "@/api/modules/sys/role";
 onMounted(() => {
   queryUserInfo();
 });
@@ -81,6 +70,7 @@ onMounted(() => {
 const userStore = useUserStoreHook();
 
 const formRef = ref();
+const roleName = ref("");
 const formData = ref({
   avatar: "",
   account: "",
@@ -103,24 +93,13 @@ const formRules = ref({
   ],
 });
 
-const isOperator = isRoleIn(RoleEnum.INTERMODAL_OPERATORS);
-// 状态切换
-function handleSwitchChange() {
-  const prevStatus = formData.value.operator.status;
-  if (!prevStatus) return false;
-  switch (prevStatus) {
-    case 1:
-      return handleLeave();
-    case 2:
-      return handleWork();
-  }
-}
-
 // 获取用户信息
 function queryUserInfo() {
-  authRoleCenterApi().then((res: any) => {
+  authMySelfApi().then((res: any) => {
     if (res && res.code === 1) {
-      formData.value = res.data;
+      formData.value = res.data.user;
+      const roleNames = res.data?.user?.role_name;
+      roleName.value = roleNames && roleNames.length > 0 ? roleNames[0] : "";
     }
   });
 }
@@ -140,7 +119,7 @@ function submitForm() {
       if (formData.value.password_old) {
         params.password_old = md5(formData.value.password_old);
       }
-      authAdminEditSelfApi(params).then((res: any) => {
+      authEditSelfApi(params).then((res: any) => {
         if (res && res.code === 1) {
           ElMessage({
             message: "修改成功",
@@ -161,64 +140,6 @@ function submitForm() {
         }
       });
     }
-  });
-}
-
-// 设置休息状态
-function handleLeave(): Promise<boolean> {
-  return new Promise((resolve, reject) => {
-    ElMessageBox.confirm("是否确认将状态变更为休息状态？", "提示", {
-      confirmButtonText: "确定",
-      cancelButtonText: "取消",
-      type: "warning",
-    })
-      .then(() => {
-        setLeaveStatusApi()
-          .then(res => {
-            if (res && res.code === 1) {
-              feedback.msgSuccess("设置成功");
-              resolve(true);
-            } else {
-              feedback.msgError("设置失败");
-              reject(false);
-            }
-          })
-          .catch(() => {
-            reject(false);
-          });
-      })
-      .catch(() => {
-        reject(false);
-      });
-  });
-}
-
-// 设置工作状态
-function handleWork(): Promise<boolean> {
-  return new Promise((resolve, reject) => {
-    ElMessageBox.confirm("是否确认将状态变更为工作状态？", "提示", {
-      confirmButtonText: "确定",
-      cancelButtonText: "取消",
-      type: "warning",
-    })
-      .then(() => {
-        setWorkeStatusApi()
-          .then(res => {
-            if (res && res.code === 1) {
-              feedback.msgSuccess("设置成功");
-              resolve(true);
-            } else {
-              feedback.msgError("设置失败");
-              reject(false);
-            }
-          })
-          .catch(() => {
-            reject(false);
-          });
-      })
-      .catch(() => {
-        reject(false);
-      });
   });
 }
 </script>

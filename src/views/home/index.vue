@@ -5,23 +5,11 @@
 -->
 <template>
   <div class="home bg-white h-full p-[10px] rounded-lg overflow-auto">
-    首页 --{{ num }}--
-    <el-button @click="changeLocal">变更</el-button>
+    <img class="home-bg w-full h-full" src="@/assets/images/welcome.png" alt="welcome" />
   </div>
 </template>
 
-<script setup lang="ts">
-import { computed } from "vue";
-import { storageLocal } from "@zhonghe/utils";
-storageLocal.setItem("num", 123);
-const num = computed(() => {
-  return storageLocal.getItem("num");
-});
-
-function changeLocal() {
-  storageLocal.setItem("num", Math.random() * 100);
-}
-</script>
+<script setup lang="ts"></script>
 
 <style lang="scss" scoped>
 .home {
