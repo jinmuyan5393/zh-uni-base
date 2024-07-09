@@ -16,6 +16,7 @@ declare global {
   };
 
   interface ViteEnv {
+    VITE_NODE_ENV: string;
     VITE_PORT: number;
     VITE_PUBLIC_PATH: string;
     VITE_ROUTER_HISTORY: string;
@@ -70,11 +71,7 @@ declare global {
     CachingAsyncRoutes?: boolean;
     TooltipEffect?: Effect;
     ResponsiveStorageNameSpace?: string;
-    isTest?: boolean;
-    isMock1?: boolean;
-    isMock2?: boolean;
-    isMock3?: boolean;
-    isMock4?: boolean;
+    isTest?: boolean; // 是否是测试环境
   }
 
   /**

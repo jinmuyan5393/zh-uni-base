@@ -13,12 +13,12 @@ import { initRouter } from "@/router/utils";
 import { bg } from "./utils/static";
 import { useRenderIcon } from "@/components/BaseIcon/hooks";
 import { ref, reactive, onMounted, onBeforeUnmount } from "vue";
-import { useTranslationLang } from "@/layout/hooks/useTranslationLang";
+// import { useTranslationLang } from "@/layout/hooks/useTranslationLang";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
 
 // import dayIcon from "@/assets/svg/day.svg?component";
 // import darkIcon from "@/assets/svg/dark.svg?component";
-import globalization from "@/assets/svg/globalization.svg?component";
+// import globalization from "@/assets/svg/globalization.svg?component";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import md5 from "md5";
 import { getConfig } from "@/config";
@@ -30,6 +30,7 @@ defineOptions({
 const router = useRouter();
 const loading = ref(false);
 const ruleFormRef = ref<FormInstance>();
+const env = import.meta.env.VITE_NODE_ENV;
 
 const { initStorage } = useLayout();
 initStorage();
@@ -37,12 +38,11 @@ initStorage();
 const { t } = useI18n();
 const { dataThemeChange } = useDataThemeChange();
 dataThemeChange();
-const { title, getDropdownItemStyle, getDropdownItemClass } = useNav();
-const { locale, translationCh, translationEn } = useTranslationLang();
+const { title } = useNav();
 
 const ruleForm = reactive({
-  username: "admin001",
-  password: "111111",
+  username: "",
+  password: "",
 });
 
 const onLogin = async (formEl: FormInstance | undefined) => {
@@ -96,6 +96,10 @@ function onkeypress({ code }: KeyboardEvent) {
 }
 
 onMounted(() => {
+  if (env === "development") {
+    ruleForm.username = "admin001";
+    ruleForm.password = "111111";
+  }
   window.document.addEventListener("keypress", onkeypress);
 });
 
@@ -154,7 +158,7 @@ onBeforeUnmount(() => {
             </Motion>
 
             <Motion :delay="150">
-              <el-form-item prop="password" class="mt-2">
+              <el-form-item prop="password" class="mt-5">
                 <el-input
                   clearable
                   show-password
@@ -165,7 +169,7 @@ onBeforeUnmount(() => {
             </Motion>
 
             <Motion :delay="250">
-              <el-button class="w-full mt-4" size="default" type="primary" :loading="loading" @click="onLogin(ruleFormRef)">
+              <el-button class="w-full mt-5" size="default" type="primary" :loading="loading" @click="onLogin(ruleFormRef)">
                 {{ t("login.login") }}
               </el-button>
             </Motion>

@@ -20,8 +20,5 @@
   "CachingAsyncRoutes": false,
   "TooltipEffect": "light",
   "ResponsiveStorageNameSpace": "responsive-",
-  "isMock1": false,
-  "isMock2": false,
-  "isMock3": false,
-  "isMock4": true
+  "isTest": false
 }
