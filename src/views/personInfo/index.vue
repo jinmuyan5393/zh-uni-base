@@ -48,7 +48,7 @@
         <re-col>
           <!-- 提交按钮 -->
           <el-form-item>
-            <el-button type="primary" @click="submitForm">保存修改</el-button>
+            <el-button type="primary" :loading="loading" @click="submitForm">保存修改</el-button>
           </el-form-item>
         </re-col>
       </el-row>
@@ -68,7 +68,7 @@ onMounted(() => {
 });
 
 const userStore = useUserStoreHook();
-
+const loading = ref(false);
 const formRef = ref();
 const roleName = ref("");
 const formData = ref({
@@ -119,26 +119,34 @@ function submitForm() {
       if (formData.value.password_old) {
         params.password_old = md5(formData.value.password_old);
       }
-      authEditSelfApi(params).then((res: any) => {
-        if (res && res.code === 1) {
-          ElMessage({
-            message: "修改成功",
-            type: "success",
-          });
-          userStore.SET_USERNAME(res.data.name);
-          userStore.SET_AVATAR(res.data.avatar);
-          const userinfo = storageLocal.getItem("user-info");
-          storageLocal.setItem("user-info", {
-            ...userinfo,
-            avatar: res.data.avatar,
-          });
-        } else {
-          ElMessage({
-            message: res.msg,
-            type: "error",
-          });
-        }
-      });
+      loading.value = true;
+      authEditSelfApi(params)
+        .then((res: any) => {
+          if (res && res.code === 1) {
+            ElMessage({
+              message: "修改成功",
+              type: "success",
+            });
+            formData.value.password_old = "";
+            formData.value.password = "";
+            formData.value.password_confirm = "";
+            userStore.SET_USERNAME(res.data.name);
+            userStore.SET_AVATAR(res.data.avatar);
+            const userinfo = storageLocal.getItem("user-info");
+            storageLocal.setItem("user-info", {
+              ...userinfo,
+              avatar: res.data.avatar,
+            });
+          } else {
+            ElMessage({
+              message: res.msg,
+              type: "error",
+            });
+          }
+        })
+        .finally(() => {
+          loading.value = false;
+        });
     }
   });
 }
